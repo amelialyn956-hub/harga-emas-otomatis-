@@ -1,0 +1,99 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -128,
+        0
+      ],
+      "id": "c35ae5f1-5098-4f6d-9282-b7dc03773670",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.coingecko.com/api/v3/simple/price?ids=pax-gold&vs_currencies=usd",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        48,
+        0
+      ],
+      "id": "3f7c9ac6-d636-4c92-9d1f-7a809a94524e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "sendTo": "amelialyn956@gmail.com",
+        "subject": "Harga Emas Hari Ini",
+        "message": "=Harga emas hari ini adalah $ {{ $json['pax-gold'].usd }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        0
+      ],
+      "id": "723b5416-7a37-40c5-b8b8-7704f89b8031",
+      "name": "Send a message",
+      "webhookId": "05841cfc-228d-41ed-a083-4db5eaf0983a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "eqWKSa2PMVAp2Ob3",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "52df5314-c87d-46f8-a239-ad5de16cdc96",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "98d73ae16f266c10c35b090d02d0e180d93e76338b522dccb8361c80d1bddb44"
+  },
+  "nodeGroups": [],
+  "id": "6I8UDxGaJwiiu79Q",
+  "tags": []
+}
